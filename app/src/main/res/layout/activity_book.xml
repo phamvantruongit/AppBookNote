@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".fragment.FragmentTypeBook">
+    tools:context=".ListBookActivity">
 
     <org.angmarch.views.NiceSpinner
         android:id="@+id/nice_spinner"

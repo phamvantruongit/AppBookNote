@@ -12,16 +12,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import vn.com.it.truongpham.appbooknote.R;
-import vn.com.it.truongpham.appbooknote.data.TypeBook;
+import vn.com.it.truongpham.appbooknote.data.BookEntity;
 import vn.com.it.truongpham.appbooknote.view.IOnClick;
 
-
-public class AdapterTypeBook extends RecyclerView.Adapter<AdapterTypeBook.ViewHolder> {
+public class AdapterBook extends RecyclerView.Adapter<AdapterBook.ViewHolder> {
     Context context;
-    List<TypeBook> list;
-    IOnClick.IOnClickAdapter clickAdapter;
+    List<BookEntity> list;
+    IOnClick.IOnClickBookAdapter clickAdapter;
 
-    public AdapterTypeBook(Context context, List<TypeBook> list,IOnClick.IOnClickAdapter clickAdapter) {
+    public AdapterBook(Context context, List<BookEntity> list,IOnClick.IOnClickBookAdapter clickAdapter) {
         this.context = context;
         this.list = list;
         this.clickAdapter=clickAdapter;
@@ -62,3 +61,4 @@ public class AdapterTypeBook extends RecyclerView.Adapter<AdapterTypeBook.ViewHo
     }
 
 }
+

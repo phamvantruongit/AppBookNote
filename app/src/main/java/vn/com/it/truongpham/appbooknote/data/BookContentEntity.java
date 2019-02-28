@@ -5,14 +5,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
-public class Book {
+public class BookContentEntity {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     public int id;
-
-    @ColumnInfo(name = "name")
-    public String name;
-
 
     @ColumnInfo(name = "chapter")
     public String chapter;

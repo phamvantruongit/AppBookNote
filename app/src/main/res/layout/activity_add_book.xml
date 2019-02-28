@@ -5,43 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
+    android:padding="5dp"
     tools:context=".AddBookActivity">
-    <EditText
-        android:singleLine="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@color/white"
-        android:textColorHint="@color/bg_red"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="7dp"
-        android:textSize="14sp"
-        android:hint="Enter name"
-        android:id="@+id/edName"
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/nice_spinner"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="wrap_content" />
+
     <EditText
-        android:singleLine="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:textColorHint="@color/bg_red"
-        android:background="@color/white"
-        android:textSize="14sp"
-        android:paddingLeft="7dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/edName"
-        android:hint="Enter Chapter"
         android:id="@+id/edChapter"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
-    <vn.com.it.truongpham.appbooknote.view.LinedEditText
+        android:layout_height="40dp"
+        android:layout_below="@id/nice_spinner"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:textColorHint="@color/black"
+        android:hint="Enter Chapter"
+        android:paddingLeft="7dp"
+        android:singleLine="true"
+        android:textColorHint="@color/gray"
+        android:textSize="14sp" />
+
+    <vn.com.it.truongpham.appbooknote.view.LinedEditText
         android:id="@+id/edContent"
-        android:layout_marginTop="40dp"
-        android:lineSpacingExtra="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/edChapter"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
         android:gravity="top|left"
-        android:singleLine="false" />
+        android:lineSpacingExtra="15dp"
+        android:singleLine="false"
+        android:textColorHint="@color/black" />
 </RelativeLayout>

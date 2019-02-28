@@ -1,14 +1,11 @@
 package vn.com.it.truongpham.appbooknote;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,23 +18,27 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import vn.com.it.truongpham.appbooknote.data.Book;
+import java.util.ArrayList;
+import java.util.List;
+
+import vn.com.it.truongpham.appbooknote.adapter.AdapterTypeBook;
 import vn.com.it.truongpham.appbooknote.data.TypeBook;
-import vn.com.it.truongpham.appbooknote.fragment.FragmentBook;
-import vn.com.it.truongpham.appbooknote.fragment.FragmentTypeBook;
 import vn.com.it.truongpham.appbooknote.view.IOnClick;
 import vn.com.it.truongpham.appbooknote.view.ShowToast;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, IOnClick.IOnClickAdapter {
-    Fragment fragment;
-    private boolean check;
+
+
+    List<TypeBook> bookList;
+    RecyclerView rvBook;
+    AdapterTypeBook adapterTypeBook;
+    RecyclerView.LayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -52,20 +53,39 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        rvBook =findViewById(R.id.rvbook);
+        bookList = new ArrayList<>();
+        getData();
+
 
     }
 
-
-    private void loadFragment(Fragment fragment, String name) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", 1);
-        fragment.setArguments(bundle);
-        fragmentTransaction.add(R.id.main, fragment, name)
-                .addToBackStack(name)
-                .commit();
+    @Override
+    public int getLayout() {
+        return R.layout.activity_main;
     }
+
+    private void getData() {
+        bookList = ApplicationBookNote.db.typeBookDAO().getListTypeBook();
+        layoutManager = new LinearLayoutManager(this);
+
+        adapterTypeBook = new AdapterTypeBook(this, bookList,this);
+        rvBook.setLayoutManager(layoutManager);
+        rvBook.setAdapter(adapterTypeBook);
+
+//        rvBook.addOnItemTouchListener(
+//                new RecyclerItemClickListener(this, rvBook ,new RecyclerItemClickListener.OnItemClickListener() {
+//                    @Override public void onItemClick(View view, int position) {
+//                        clickAdapter.OnClickItem(bookList.get(position));
+//                    }
+//
+//                    @Override public void onLongItemClick(View view, int position) {
+//                        //showDialog(bookList.get(position).name,bookList.get(position).id_type_book);
+//                    }
+//                })
+//        );
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -88,16 +108,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.item_add) {
-             if(check){
-                 check=false;
-             }else {
-                showDialog(null,1);
-             }
+            showDialog(null,1 ,"Add Name Type Book");
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void showDialog(final String name,int id){
+    private void showDialog(final String name,int id ,String title){
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.show_popup_type_book);
@@ -106,9 +122,9 @@ public class MainActivity extends AppCompatActivity
         TextView tvOK = dialog.findViewById(R.id.tvOK);
         TextView tvTitle=dialog.findViewById(R.id.tvTitle);
         final EditText edTypeBook = dialog.findViewById(R.id.edTypeBook);
-        if(name!=null){
+        if(name!=null || title!=""){
             edTypeBook.setText(name);
-            tvTitle.setText("Edit Type Book");
+            tvTitle.setText(title);
         }
         tvOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,12 +161,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            fragment = new FragmentTypeBook();
-            loadFragment(fragment, "FragmentTypeBook");
         } else if (id == R.id.nav_gallery) {
-            check=true;
-            fragment = new FragmentBook();
-            loadFragment(fragment, "FragmentBook");
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -169,14 +180,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void OnClickItem(TypeBook typeBook) {
-        check=true;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", typeBook.id);
-        FragmentBook fragmentBook = new FragmentBook();
-        fragmentBook.setArguments(bundle);
-        fragmentTransaction.replace(R.id.main, fragmentBook).addToBackStack(null).commit();
+        Intent intent=new Intent(this,ListBookActivity.class);
+        startActivity(intent);
+        this.overridePendingTransition(R.anim.anim_slide_in_left,
+                R.anim.anim_slide_out_left);
     }
 
 

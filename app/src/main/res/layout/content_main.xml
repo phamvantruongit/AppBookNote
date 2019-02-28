@@ -9,9 +9,8 @@
     android:id="@+id/main"
     tools:showIn="@layout/app_bar_main">
 
-   <fragment
-       android:id="@+id/fragment"
-       android:name="vn.com.it.truongpham.appbooknote.fragment.FragmentTypeBook"
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/rvbook"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>
 
