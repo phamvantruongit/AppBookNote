@@ -16,6 +16,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes {
+        release {
+            buildConfigField "boolean", "enableDebugLogging", "false"
+            resValue "color", "debug", "red"
+            buildConfigField "String", "API_KEY", "\"0987654321\""
+        }
+        debug {
+            buildConfigField "boolean", "enableDebugLogging", "true"
+            buildConfigField "String", "API_KEY", "\"1234567890\""
+        }
+    }
 }
 
 dependencies {

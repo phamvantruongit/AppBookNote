@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,14 @@ public class MainActivity extends BaseActivity
     AdapterTypeBook adapterTypeBook;
     RecyclerView.LayoutManager layoutManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -72,7 +75,6 @@ public class MainActivity extends BaseActivity
         adapterTypeBook = new AdapterTypeBook(this, bookList,this);
         rvBook.setLayoutManager(layoutManager);
         rvBook.setAdapter(adapterTypeBook);
-
 //        rvBook.addOnItemTouchListener(
 //                new RecyclerItemClickListener(this, rvBook ,new RecyclerItemClickListener.OnItemClickListener() {
 //                    @Override public void onItemClick(View view, int position) {
