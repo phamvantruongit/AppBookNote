@@ -23,8 +23,16 @@
         <activity
             android:name=".AddBookActivity"
             android:label="Add Content" />
-        <activity android:name=".TypeBookActivity" />
-        <activity android:name=".ListBookActivity"></activity>
+        <activity android:name=".ListBookActivity" />
+        <activity android:name=".Main2Activity">
+
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+
+        </activity>
     </application>
 
 </manifest>

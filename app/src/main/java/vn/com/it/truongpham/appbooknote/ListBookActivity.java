@@ -31,12 +31,13 @@ public class ListBookActivity extends BaseActivity implements IOnClick.IOnClickB
    List<BookEntity> bookList;
    AdapterBook adapterBook;
    int id_type_book =1;
+   int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         rvbook=findViewById(R.id.rvbook);
-
-        getData(1);
+        id=getIntent().getIntExtra("id",1);
+        getData(id);
 
         NiceSpinner niceSpinner = findViewById(R.id.nice_spinner);
         List<String> dataset = new ArrayList<>();
@@ -110,8 +111,14 @@ public class ListBookActivity extends BaseActivity implements IOnClick.IOnClickB
                 BookEntity bookEntity=new BookEntity();
                 bookEntity.name=text;
                 bookEntity.id_type_book=id_type_book;
-                ApplicationBookNote.db.bookEntityDao().insertBook(bookEntity);
+
+                if(name!=null){
+                    ApplicationBookNote.db.bookEntityDao().updateBook(text,id);
+                }else {
+                    ApplicationBookNote.db.bookEntityDao().insertBook(bookEntity);
+                }
                 dialog.dismiss();
+                getData(id_type_book);
 
 
             }
@@ -136,5 +143,10 @@ public class ListBookActivity extends BaseActivity implements IOnClick.IOnClickB
                 R.anim.anim_slide_out_left);
 
 
+    }
+
+    @Override
+    public void OnClickItemEdit(BookEntity bookEntity) {
+        showDialog(bookEntity.name,bookEntity.id,"Edit Name  Book");
     }
 }

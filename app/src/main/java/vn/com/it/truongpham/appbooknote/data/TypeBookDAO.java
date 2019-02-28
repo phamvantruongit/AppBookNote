@@ -15,6 +15,9 @@ public interface TypeBookDAO {
     List<TypeBook> getListTypeBook();
 
 
+    @Query("update typebook set name= :name where id in (:id)")
+    void updateTypeBook(String name , int id);
+
 
 
 //

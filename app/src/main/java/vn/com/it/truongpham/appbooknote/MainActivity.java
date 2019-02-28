@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import mobile.sarproj.com.layout.SwipeLayout;
 import vn.com.it.truongpham.appbooknote.adapter.AdapterTypeBook;
 import vn.com.it.truongpham.appbooknote.data.TypeBook;
 import vn.com.it.truongpham.appbooknote.view.IOnClick;
@@ -115,7 +116,7 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void showDialog(final String name,int id ,String title){
+    private void showDialog(final String name, final int id , String title){
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.show_popup_type_book);
@@ -139,10 +140,12 @@ public class MainActivity extends BaseActivity
                 TypeBook typeBook = new TypeBook();
                 typeBook.name = text;
                 if(name!=null){
-
+                    ApplicationBookNote.db.typeBookDAO().updateTypeBook(text,id);
                 }else {
                     ApplicationBookNote.db.typeBookDAO().insertTypeBook(typeBook);
                 }
+                getData();
+
                 dialog.dismiss();
 
             }
@@ -181,11 +184,29 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void OnClickItem(TypeBook typeBook) {
+    public void OnClickItem(TypeBook typeBook , SwipeLayout swipeLayout) {
         Intent intent=new Intent(this,ListBookActivity.class);
+        intent.putExtra("id",typeBook.id);
         startActivity(intent);
         this.overridePendingTransition(R.anim.anim_slide_in_left,
                 R.anim.anim_slide_out_left);
+        swipeLayout.close();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void OnClickItemEdit(TypeBook typeBook) {
+        showDialog(typeBook.name,typeBook.id,"Edit Name Type Book");
     }
 
 

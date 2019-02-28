@@ -13,4 +13,8 @@ public interface BookEntityDao {
 
     @Query("SELECT * FROM bookentity where id_type_book in (:id_type_book) ")
     List<BookEntity> getListBookEntity(int id_type_book );
+
+
+    @Query("update bookentity set name= :name where  id in (:id)")
+    void updateBook(String name , int id);
 }
