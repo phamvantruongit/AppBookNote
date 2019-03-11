@@ -17,4 +17,6 @@ public class BookEntity {
     @ColumnInfo(name = "id_type_book")
     public int id_type_book;
 
+
+
 }

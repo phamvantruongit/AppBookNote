@@ -3,6 +3,8 @@ package vn.com.it.truongpham.appbooknote;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -24,19 +26,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobile.sarproj.com.layout.SwipeLayout;
+import vn.com.it.truongpham.appbooknote.adapter.AdapterNavigationView;
 import vn.com.it.truongpham.appbooknote.adapter.AdapterTypeBook;
 import vn.com.it.truongpham.appbooknote.data.TypeBook;
 import vn.com.it.truongpham.appbooknote.view.IOnClick;
+import vn.com.it.truongpham.appbooknote.view.RecyclerItemClickListener;
 import vn.com.it.truongpham.appbooknote.view.ShowToast;
+
+import static android.widget.LinearLayout.HORIZONTAL;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, IOnClick.IOnClickAdapter {
 
 
     List<TypeBook> bookList;
-    RecyclerView rvBook;
+    RecyclerView rvBook,rv_NavigationView;
     AdapterTypeBook adapterTypeBook;
     RecyclerView.LayoutManager layoutManager;
+    DrawerLayout drawer;
 
 
     @Override
@@ -48,7 +55,7 @@ public class MainActivity extends BaseActivity
 
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -58,6 +65,7 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         rvBook =findViewById(R.id.rvbook);
+        rv_NavigationView=findViewById(R.id.rv_NavigationView);
         bookList = new ArrayList<>();
         getData();
 
@@ -72,21 +80,46 @@ public class MainActivity extends BaseActivity
     private void getData() {
         bookList = ApplicationBookNote.db.typeBookDAO().getListTypeBook();
         layoutManager = new LinearLayoutManager(this);
-
         adapterTypeBook = new AdapterTypeBook(this, bookList,this);
         rvBook.setLayoutManager(layoutManager);
         rvBook.setAdapter(adapterTypeBook);
-//        rvBook.addOnItemTouchListener(
-//                new RecyclerItemClickListener(this, rvBook ,new RecyclerItemClickListener.OnItemClickListener() {
-//                    @Override public void onItemClick(View view, int position) {
-//                        clickAdapter.OnClickItem(bookList.get(position));
-//                    }
-//
-//                    @Override public void onLongItemClick(View view, int position) {
-//                        //showDialog(bookList.get(position).name,bookList.get(position).id_type_book);
-//                    }
-//                })
-//        );
+
+        List<String> list=new ArrayList<>();
+        list.add("My Note");
+        list.add("Write Note");
+        list.add("Rate App");
+        list.add("Share App");
+        list.add("More App");
+        list.add("Send Feedback");
+        list.add("About");
+        AdapterNavigationView adapterNavigationView=new AdapterNavigationView(this,list);
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+        rv_NavigationView.setLayoutManager(layoutManager);
+        rv_NavigationView.setAdapter(adapterNavigationView);
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
+        rv_NavigationView.addItemDecoration(itemDecorator);
+        rv_NavigationView.addOnItemTouchListener(new RecyclerItemClickListener(this, rv_NavigationView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                 switch (position){
+                     case 0:
+                         drawer.closeDrawer(GravityCompat.START);
+                         break;
+                     case 1 : Intent intent=new Intent(MainActivity.this,ListBookActivity.class);
+                         startActivity(intent);
+                         MainActivity.this.overridePendingTransition(R.anim.anim_slide_in_left,
+                                 R.anim.anim_slide_out_left);
+                         drawer.closeDrawer(GravityCompat.START);
+                         break;
+                 }
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+        }));
     }
 
 
@@ -111,7 +144,7 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.item_add) {
-            showDialog(null,1 ,"Add Name Type Book");
+            showDialog(null,1 ,"Wellcome you to MyNote");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -163,20 +196,20 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+//        int id = item.getItemId();
+//
+//        if (id == R.id.nav_camera) {
+//        } else if (id == R.id.nav_gallery) {
+//
+//        } else if (id == R.id.nav_slideshow) {
+//
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -206,7 +239,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void OnClickItemEdit(TypeBook typeBook) {
-        showDialog(typeBook.name,typeBook.id,"Edit Name Type Book");
+        showDialog(typeBook.name,typeBook.id,"Wellcome you to MyNote");
     }
 
 
