@@ -2,8 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="250dp"
-    android:layout_height="150dp"
-    android:background="@drawable/boder_layout"
+    android:layout_height="180dp"
+    android:background="@drawable/boder_item_top"
     android:paddingLeft="8dp"
     android:paddingTop="5dp"
     android:paddingRight="8dp">
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="5dp"
+        android:padding="7dp"
         android:text="Wellcome You"
         android:textColor="@color/black"
         android:textSize="15sp"
@@ -23,7 +23,7 @@
         android:id="@+id/edTypeBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/boder_item_top"
         android:hint="Enter name"
         android:padding="8dp"
@@ -34,7 +34,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 

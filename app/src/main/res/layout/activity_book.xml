@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
     <android.support.v7.widget.RecyclerView
+        android:background="@color/color_bg"
         android:layout_below="@id/view"
         android:id="@+id/rvbook"
         android:layout_width="match_parent"

@@ -9,4 +9,5 @@
     <color name="bg_red">#e71236</color>
     <color name="black">#000</color>
     <color name="gray">#ccc</color>
+    <color name="color_bg">#f9f7f7</color>
 </resources>

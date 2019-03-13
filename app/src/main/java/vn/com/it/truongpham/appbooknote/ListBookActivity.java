@@ -2,7 +2,6 @@ package vn.com.it.truongpham.appbooknote;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,15 +45,17 @@ public class ListBookActivity extends BaseActivity implements IOnClick.IOnClickB
         for(TypeBook name : listTypeBook){
             dataset.add(name.name);
         }
-        niceSpinner.attachDataSource(dataset);
-        niceSpinner.addOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                 position++;
-                 id_type_book=position;
-                 getData(id_type_book);
-            }
-        });
+        if(dataset.size()>0) {
+            niceSpinner.attachDataSource(dataset);
+            niceSpinner.addOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    position++;
+                    id_type_book = position;
+                    getData(id_type_book);
+                }
+            });
+        }
     }
 
     @Override
