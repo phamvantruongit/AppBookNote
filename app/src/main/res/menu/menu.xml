@@ -7,4 +7,9 @@
         app:showAsAction="always"
         android:iconTint="@color/white"
         android:title="" />
+    <item
+        android:id="@+id/item_edit"
+        android:icon="@drawable/ic_add"
+        app:showAsAction="always"
+        android:title="" />
 </menu>

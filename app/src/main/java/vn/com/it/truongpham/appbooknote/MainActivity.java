@@ -79,11 +79,11 @@ public class MainActivity extends BaseActivity
         getData();
 
 
-       final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.layout_update_app);
         dialog.setCancelable(false);
-//        dialog.show();
+        //dialog.show();
         TextView tvGoto = dialog.findViewById(R.id.tvGoto);
         TextView tvAfter = dialog.findViewById(R.id.tvAfter);
         tvAfter.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +170,7 @@ public class MainActivity extends BaseActivity
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setContentView(R.layout.layout_popup_share);
                         dialog.setCancelable(false);
-                        dialog.show();
+                        //dialog.show();
                         ImageView ivFB = dialog.findViewById(R.id.iv_fb);
                         ImageView ivIn = dialog.findViewById(R.id.iv_instagram);
                         ImageView ivTw = dialog.findViewById(R.id.iv_twitter);
@@ -227,6 +227,13 @@ public class MainActivity extends BaseActivity
                                 dialog.dismiss();
                             }
                         });
+                        intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("plain/text");
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"phamvantruongit@gmail.com"});
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Write title");
+                        intent.putExtra(Intent.EXTRA_TEXT, "Write some things");
+                        startActivity(Intent.createChooser(intent, ""));
+
                         break;
                     case 4:
                         break;

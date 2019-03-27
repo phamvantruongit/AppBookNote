@@ -26,7 +26,6 @@ public class AddBookActivity extends BaseActivity {
         id_book =getIntent().getIntExtra("id",1);
         id_type_book=getIntent().getIntExtra("id_type_book",1);
 
-
         edChapter = findViewById(R.id.edChapter);
         edContent = findViewById(R.id.edContent);
         NiceSpinner niceSpinner = findViewById(R.id.nice_spinner);
@@ -81,6 +80,14 @@ public class AddBookActivity extends BaseActivity {
                 ShowToast.showToast(AddBookActivity.this,R.layout.show_toast_error);
             }
         }
+
+        if (item.getItemId() == R.id.item_edit) {
+            if ( !edContent.getText().toString().equals("")) {
+                ApplicationBookNote.db.bookDAO().updateBook(edChapter.getText().toString(),edContent.getText().toString(),id_book);
+                ShowToast.showToast(AddBookActivity.this,R.layout.show_toast_error);
+            }
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

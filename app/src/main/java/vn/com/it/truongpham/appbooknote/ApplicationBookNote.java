@@ -11,7 +11,7 @@ public class ApplicationBookNote extends Application {
 
     public AppDatabase createDatabaseUser() {
         if (db == null) {
-            return   db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-userEntity").allowMainThreadQueries().build();
+            return   db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database").allowMainThreadQueries().build();
         }
         return db;
     }
